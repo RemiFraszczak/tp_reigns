@@ -5,8 +5,10 @@
  */
 package com.fges.tp_solid.reigns;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Scanner;
 import java.util.TreeMap;
 
 /**
@@ -139,7 +141,26 @@ public class Question {
     public void setEffetDroite(String effetDroite) {
         this.effetDroite = effetDroite;
     }
-    
+
+    public static Question getQuestionAleatoire(ArrayList<Question> questions, Personnage personnage){
+        int numQuestion = (int)(Math.random()* questions.size());
+        if (personnage.getJaugeFinance().getValeur() < 10)
+        {
+            numQuestion = (int) (Math.random()*6);
+        }
+        else if (personnage.getJaugeFinance().getValeur() > 30 && personnage.getJaugeClerge().getValeur() < 10)
+        {
+            while (numQuestion == 5)
+            {
+                numQuestion = (int) (Math.random() * 7);
+            }
+        }
+        else {
+            numQuestion = (int) (Math.random() * 5);
+        }
+        return questions.get(numQuestion);
+    }
+
     public static void reponseQuestion(Question question, Personnage personnage){
         question.afficheQuestion();
         // récupère la réponse
