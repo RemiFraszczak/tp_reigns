@@ -140,5 +140,22 @@ public class Question {
         this.effetDroite = effetDroite;
     }
     
+    public static void reponseQuestion(Question question, Personnage personnage){
+        question.afficheQuestion();
+        // récupère la réponse
+        Scanner scanner = new Scanner(System.in);
+        String reponse = "";
+        while(!reponse.equals("G") && !reponse.equals("D")){
+            System.out.println("Entrez la réponse (G ou D)");
+            System.out.flush();
+            reponse = scanner.nextLine();
+        }
+        // applique les malus
+        if(reponse.equals("G")){
+            question.appliqueEffetsGauche(personnage);
+        }else{
+            question.appliqueEffetsDroite(personnage);
+        }
+    }
     
 }
