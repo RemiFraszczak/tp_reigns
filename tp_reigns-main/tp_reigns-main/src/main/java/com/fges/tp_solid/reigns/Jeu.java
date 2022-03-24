@@ -19,7 +19,7 @@ public class Jeu {
     
     private static Personnage personnage;
     private static ArrayList<Question> questions;
-    
+
     public static void main(String args[]){
         
         // début du jeu 
@@ -40,8 +40,8 @@ public class Jeu {
         int nbTours = 0;
         while(!personnage.finDuJeu()){
             nbTours++;
-            Question question = getQuestionAleatoire();
-            reponseQuestion(question);
+            Question question = Question.getQuestionAleatoire(questions);
+            Question.reponseQuestion(question,personnage);
             personnage.AfficheJauges();
         }
         
@@ -54,26 +54,7 @@ public class Jeu {
          
     }
     
-    private static void reponseQuestion(Question question){
-        question.afficheQuestion();
-        // récupère la réponse
-        Scanner scanner = new Scanner(System.in);
-        String reponse = "";
-        while(!reponse.equals("G") && !reponse.equals("D")){
-            System.out.println("Entrez la réponse (G ou D)");
-            System.out.flush();
-            reponse = scanner.nextLine();
-        }
-        // applique les malus
-        if(reponse.equals("G")){
-            question.appliqueEffetsGauche(personnage);
-        }else{
-            question.appliqueEffetsDroite(personnage);
-        }
-    }
-    
-    
-    private static void initPersonnage(){        
+    private static void initPersonnage(){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Entrez le nom du personnage: ");
         System.out.flush();
@@ -141,11 +122,7 @@ public class Jeu {
         question5.ajouteEffetDroite(TypeJauge.PEUPLE, -3);
         questions.add(question5);
     }
-    
-    private static Question getQuestionAleatoire(){
-        int numQuestion = (int) (Math.random()*questions.size());
-        return questions.get(numQuestion);
-    }
+
     
     
 }
