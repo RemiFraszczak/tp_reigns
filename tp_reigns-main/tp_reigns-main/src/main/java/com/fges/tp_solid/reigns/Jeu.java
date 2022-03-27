@@ -36,23 +36,30 @@ public class Jeu {
         
         personnage.AfficheJauges();
         
-        // tirage des questions
         int nbTours = 0;
         while(!personnage.finDuJeu()){
             nbTours++;
-            Question question = Question.getQuestionAleatoire(questions);
-            Question.reponseQuestion(question,personnage);
-            personnage.AfficheJauges();
+            if (nbTours == 9)
+            {
+                System.out.println("Winter is coming");
+                Question question = Question.getQuestionAleatoire(questions,personnage);
+                Question.reponseQuestion(question,personnage);
+                personnage.AfficheJauges();
+            }
+            else if (nbTours > 9)
+            {
+                JeuGot.Winter(personnage);
+                if (nbTours == 14)
+                {
+                    nbTours = 0;
+                }
+            }
+            else {
+                Question question = Question.getQuestionAleatoire(questions, personnage);
+                Question.reponseQuestion(question, personnage);
+                personnage.AfficheJauges();
+            }
         }
-        
-        // fin du jeu
-        System.out.println(
-            personnage.getNom() 
-            + " a perdu ! Son règne a duré "
-            +nbTours
-            + " tours");
-         
-    }
     
     private static void initPersonnage(){
         Scanner scanner = new Scanner(System.in);
